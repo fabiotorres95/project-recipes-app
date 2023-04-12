@@ -86,7 +86,9 @@ function RecipeInProgress() {
     };
     if (!doneRecipes) {
       localStorage.setItem('doneRecipes', JSON.stringify([objRecipe]));
+      console.log('if');
     } else if (doneRecipes && validationRecipe === false) {
+      console.log('else if');
       localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, objRecipe]));
     }
     history.push('/done-recipes');
@@ -167,7 +169,7 @@ function RecipeInProgress() {
                 checked={ validation }
                 onChange={ (e) => handleClick(string, e) }
               />
-              {`${string} ${measures[index] || ''}`}
+              {`${string} ${measures[index]}`}
             </label>
             <br />
           </div>

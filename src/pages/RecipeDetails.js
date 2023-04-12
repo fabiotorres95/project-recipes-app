@@ -88,9 +88,9 @@ function RecipeDetails(props) {
   }, [details]);
 
   const getLink = (youtubeLink) => {
-    if (!youtubeLink) return;
+    // if (!youtubeLink) return;
     const embedLink = 'https://www.youtube.com/embed/';
-    const linkId = youtubeLink.split('v=')[1];
+    const linkId = youtubeLink?.split('v=')[1];
     return `${embedLink}${linkId}`;
   };
 
@@ -149,7 +149,7 @@ function RecipeDetails(props) {
             <img src={ shareIcon } alt="Compartilhar" />
           </button>
           {copied && <p>Link copied!</p>}
-          { details ? <FavoriteButton idRecipe={ id } recipe={ details } /> : ''}
+          <FavoriteButton idRecipe={ id } recipe={ details } />
           <h3 data-testid="recipe-category">
             { type === 'meals' ? details[0].strCategory : details[0].strAlcoholic }
           </h3>

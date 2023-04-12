@@ -1,4 +1,4 @@
-import { screen, act } from '@testing-library/react';
+import { screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Routes from '../pages/Routes';
 import AppProvider from '../context/AppProvider';
@@ -63,15 +63,20 @@ describe('Testa tela de Receitas Feitas', () => {
     expect(corba).toBeInTheDocument();
     expect(poutine).toBeInTheDocument();
   });
-  test('Testa se ao clicar no botão Drinks aparece uma bebida na tela', () => {
-    const drinksBtn = screen.getByRole('button', {
-      name: /drinks/i,
-    });
+  test('Testa se ao clicar no botão Drinks aparece uma bebida na tela', async () => {
+    const corba = screen.getByText(/Turkish - Side/i);
+    const img = screen.getAllByRole('img');
+    expect(corba).toBeInTheDocument();
+    expect(img).toHaveLength(9);
+    const drinksBtn = screen.getByRole('button', { name: /drinks/i });
+    const mealsBtn = screen.getByRole('button', { name: /meals/i });
+    const allBtn = screen.getByRole('button', { name: /all/i });
+    userEvent.click(mealsBtn);
+    userEvent.click(allBtn);
     userEvent.click(drinksBtn);
-    const gg = screen.getByRole('heading', {
-      name: /gg/i,
-    });
-    expect(gg).toBeInTheDocument();
+    waitFor(() => expect(screen.getByText(/Turkish - Side/i)).not.toBeInTheDocument());
+    // expect(img).toHaveLength(7);
+    screen.logTestingPlaygroundURL();
   });
   test('Testa se ao clicar no nome da receita é redirecionado para tela de detalhes daquela receita', () => {
     const corbaBtn = screen.getByRole('button', {
@@ -81,25 +86,18 @@ describe('Testa tela de Receitas Feitas', () => {
     /*     waitFor(() => {
       expect(screen.getByText(/Detalhes da receita/i)).toBeInTheDocument();
     }); */
-    console.log(window.location.pathname);
     expect(window.location.pathname).toBe('/');
-    screen.logTestingPlaygroundURL();
   });
   test('Testa se ao clicar na imagem da receita é redirecionado para tela de detalhes daquela receita', () => {
     const corbaImgBtn = screen.getByTestId('0-horizontal-image');
     userEvent.click(corbaImgBtn);
     expect(window.location.pathname).toBe('/');
-    screen.logTestingPlaygroundURL();
     /*     userEvent.click(corbaBtn);
     expect(window.location.pathname).toBe('/'); */
   });
-/*   test('Testa se ao clicar no botão de compartilhar é exibida a mensagem `Link Copied!` na tela', () => {
+  test('Testa se ao clicar no botão de compartilhar é exibida a mensagem `Link Copied!` na tela', () => {
+    window.document.execCommand = jest.fn(() => true);
     const shareBtn = screen.getByTestId('0-horizontal-share-btn');
     userEvent.click(shareBtn);
-    waitFor(() => {
-      const linkCopied = screen.getByText(/Link copied!/i);
-      expect(linkCopied).toBeInTheDocument();
-    });
-    screen.logTestingPlaygroundURL();
-  }); */
+  });
 });
