@@ -86,9 +86,7 @@ function RecipeInProgress() {
     };
     if (!doneRecipes) {
       localStorage.setItem('doneRecipes', JSON.stringify([objRecipe]));
-      console.log('if');
     } else if (doneRecipes && validationRecipe === false) {
-      console.log('else if');
       localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, objRecipe]));
     }
     history.push('/done-recipes');
