@@ -167,7 +167,7 @@ function RecipeInProgress() {
                 checked={ validation }
                 onChange={ (e) => handleClick(string, e) }
               />
-              {`${string} ${measures[index] || ''}`}
+              {`${string} ${measures[index]}`}
             </label>
             <br />
           </div>
