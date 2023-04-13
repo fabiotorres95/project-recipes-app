@@ -28,6 +28,7 @@ describe('Testando a página de receitas favoritas', () => {
 
   const mealNameTestId = '0-horizontal-name';
   const drinkNameTestId = '1-horizontal-name';
+  const mealFilterTestId = 'filter-by-meal-btn';
 
   beforeEach(() => {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
@@ -59,7 +60,7 @@ describe('Testando a página de receitas favoritas', () => {
     const meal = screen.getByTestId(mealNameTestId);
     const drink = screen.getByTestId(drinkNameTestId);
 
-    const mealFilter = screen.getByTestId('filter-by-meal-btn');
+    const mealFilter = screen.getByTestId(mealFilterTestId);
     const drinkFilter = screen.getByTestId('filter-by-drink-btn');
     const AllFilter = screen.getByTestId('filter-by-all-btn');
 
@@ -113,7 +114,7 @@ describe('Testando a página de receitas favoritas', () => {
   it('testa se o botão de remover favoritos funciona com a lista filtrada por "meals"', () => {
     const meal = screen.getByTestId(mealNameTestId);
     const drink = screen.getByTestId(drinkNameTestId);
-    const mealFilter = screen.getByTestId('filter-by-meal-btn');
+    const mealFilter = screen.getByTestId(mealFilterTestId);
     const unfavoriteMeal = screen.getByTestId('0-horizontal-favorite-btn');
 
     userEvent.click(mealFilter);
@@ -139,13 +140,15 @@ describe('Testando a página de receitas favoritas', () => {
   });
 
   it('testa se a tela fica em branco quando localStorage está vazio', () => {
-    const meal = screen.getByTestId(mealNameTestId);
-    const drink = screen.getByTestId(drinkNameTestId);
-
     localStorage.clear();
-    waitFor(() => {
-      expect(meal).not.toBeInTheDocument();
-      expect(drink).not.toBeInTheDocument();
+    const { history } = renderWithRouter(<AppProvider><Routes /></AppProvider>);
+    act(() => {
+      history.push('/favorite-recipes');
     });
+
+    const mealFilter = screen.getAllByTestId(mealFilterTestId);
+    const meal = screen.getAllByTestId(mealNameTestId);
+    expect(mealFilter.length).toStrictEqual(2);
+    expect(meal.length).toStrictEqual(1);
   });
 });
