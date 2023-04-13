@@ -56,7 +56,7 @@ describe('Testando a página de receitas favoritas', () => {
     });
   });
 
-  it('testa se o botão de filtro "meals", "drinks" e "All" funcionam', () => {
+  it('testa se os botões de filtro "meals", "drinks" e "All" funcionam', () => {
     const meal = screen.getByTestId(mealNameTestId);
     const drink = screen.getByTestId(drinkNameTestId);
 
