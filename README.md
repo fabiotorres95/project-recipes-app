@@ -11,3 +11,5 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 Projeto App de Receitas - Trybe curso Front-End seção 10: "Projeto Final"
 
 Front-End - projeto 10 de 10
+
+coautores: Thiago Papim, Larissa Simões, Luiz Guilherme Schiavon Seixas.
